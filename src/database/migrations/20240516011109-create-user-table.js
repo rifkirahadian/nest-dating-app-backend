@@ -18,6 +18,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
@@ -31,6 +32,7 @@ module.exports = {
       dailySwipeQuota: {
         type: Sequelize.INTEGER,
         allowNull: true,
+        defaultValue: 10,
       },
       updatedAt: Sequelize.DATE,
       createdAt: Sequelize.DATE,
