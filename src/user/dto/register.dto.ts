@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsIn, IsNotEmpty, MinLength } from 'class-validator';
 
 export class RegisterDto {
   @ApiProperty()
@@ -15,4 +15,9 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(6)
   password: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsIn(['male', 'female'])
+  gender: string;
 }

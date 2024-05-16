@@ -10,11 +10,12 @@ export class UserService {
   ) {}
 
   async create(payload: RegisterDto): Promise<User> {
-    const { name, email, password } = payload;
+    const { name, email, password, gender } = payload;
     return this.usersRepository.create({
       name,
       email,
       password,
+      gender,
     });
   }
 

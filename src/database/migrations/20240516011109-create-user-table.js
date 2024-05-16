@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      gender: {
+        type: Sequelize.ENUM('male', 'female'),
+        allowNull: false,
+      },
       isVerified: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
@@ -40,6 +44,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('users');
   },
 };
