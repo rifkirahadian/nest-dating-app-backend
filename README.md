@@ -32,6 +32,16 @@
 $ npm install
 ```
 
+## Setup Database
+
+```bash
+# exec migration
+$ npx sequelize-cli db:migrate
+
+# exec seeder
+$ npx sequelize-cli db:seed:all
+```
+
 ## Running the app
 
 ```bash
@@ -57,6 +67,25 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Project Structure
+This project has 3 module
+- user
+- swipes
+- transaction
+
+Each modules have a structure with the functionality per file:
+- controller: To handle routing and catch request
+- service: To handle every operation in the project
+- dto: As a structure for post request activity
+- provider: As a layer to access model
+- entity: To describe table structure
+
+## Api Docs
+http://localhost:3000/api#/
+
+## Deployed
+This project will deployed at: https://dating-app-api.funcrowds.com/api
 
 ## Support
 
