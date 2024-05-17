@@ -2,6 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { User } from './entities/user.entity';
 import { Op } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class UserService {
@@ -40,7 +41,12 @@ export class UserService {
   async getViewedUser(userId: number, gender: string): Promise<User> {
     const user = await this.usersRepository.findOne({
       where: {
-        id: { [Op.ne]: userId },
+        id: {
+          [Op.ne]: userId,
+          [Op.notIn]: Sequelize.literal(
+            `(SELECT "userTargetId" FROM "swipes" WHERE "userId" = ${userId})`,
+          ),
+        },
         gender: { [Op.ne]: gender },
       },
     });
