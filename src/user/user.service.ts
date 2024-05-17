@@ -1,6 +1,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { User } from './entities/user.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -32,5 +33,16 @@ export class UserService {
     if (user) {
       throw new BadRequestException(`Email '${email}' has been used`);
     }
+  }
+
+  async getViewedUser(userId: number, gender: string) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: { [Op.ne]: userId },
+        gender: { [Op.ne]: gender },
+      },
+    });
+
+    return user;
   }
 }

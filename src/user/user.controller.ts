@@ -52,12 +52,13 @@ export class UserController {
       });
     }
 
-    const { id, name, email } = user;
+    const { id, name, email, gender } = user;
     const token = this.jwtService.sign(
       {
         id,
         name,
         email,
+        gender,
       },
       {
         secret: jwtConstants.secret,
