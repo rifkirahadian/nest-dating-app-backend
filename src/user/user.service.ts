@@ -53,4 +53,18 @@ export class UserService {
 
     return user;
   }
+
+  async updateVerified(userId: number): Promise<User> {
+    const user = await this.findById(userId);
+    user.isVerified = true;
+    await user.save();
+    return user;
+  }
+
+  async updateDailySwipeQuota(userId: number): Promise<User> {
+    const user = await this.findById(userId);
+    user.dailySwipeQuota = null;
+    await user.save();
+    return user;
+  }
 }

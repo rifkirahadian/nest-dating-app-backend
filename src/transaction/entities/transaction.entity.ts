@@ -1,17 +1,11 @@
 import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { User } from 'src/user/entities/user.entity';
 
-@Table({
-  tableName: 'swipes',
-})
-export class Swipe extends Model {
+@Table
+export class Transaction extends Model {
   @ForeignKey(() => User)
   @Column
   userId: number;
-
-  @ForeignKey(() => User)
-  @Column
-  userTargetId: number;
 
   @Column
   type: string;
