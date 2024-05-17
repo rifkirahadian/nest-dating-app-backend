@@ -7,7 +7,7 @@ module.exports = {
     const { faker } = require('@faker-js/faker');
 
     await queryInterface.bulkInsert(
-      'Users',
+      'users',
       [...Array(40).keys()].map(() => ({
         name: faker.person.fullName({ sex: 'male' }),
         email: faker.internet.email(),
@@ -20,7 +20,7 @@ module.exports = {
     console.log('Created 1');
 
     await queryInterface.bulkInsert(
-      'Users',
+      'users',
       [...Array(40).keys()].map(() => ({
         name: faker.person.fullName({ sex: 'male' }),
         email: faker.internet.email(),
@@ -33,7 +33,7 @@ module.exports = {
     console.log('Created 2');
 
     await queryInterface.bulkInsert(
-      'Users',
+      'users',
       [...Array(40).keys()].map(() => ({
         name: faker.person.fullName({ sex: 'female' }),
         email: faker.internet.email(),
@@ -46,7 +46,7 @@ module.exports = {
     console.log('Created 3');
 
     await queryInterface.bulkInsert(
-      'Users',
+      'users',
       [...Array(40).keys()].map(() => ({
         name: faker.person.fullName({ sex: 'female' }),
         email: faker.internet.email(),

@@ -20,12 +20,14 @@ export class UserService {
     });
   }
 
-  async findOneByEmail(email: string): Promise<User> {
-    const user = await this.usersRepository.findOne({
+  findOneByEmail(email: string): Promise<User> {
+    return this.usersRepository.findOne({
       where: { email },
     });
+  }
 
-    return user;
+  findById(id: number): Promise<User> {
+    return this.usersRepository.findByPk(id);
   }
 
   async validateUserUniqueEmail(email: string) {
@@ -35,7 +37,7 @@ export class UserService {
     }
   }
 
-  async getViewedUser(userId: number, gender: string) {
+  async getViewedUser(userId: number, gender: string): Promise<User> {
     const user = await this.usersRepository.findOne({
       where: {
         id: { [Op.ne]: userId },

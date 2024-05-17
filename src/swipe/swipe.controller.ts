@@ -6,9 +6,10 @@ import {
   UseGuards,
   Request,
   Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { SwipeService } from './swipe.service';
-import { CreateSwipeDto } from './dto/create-swipe.dto';
+import { SwipeDto } from './dto/swipe.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthGuard } from 'src/guards/auth';
 import { Response } from 'express';
@@ -22,19 +23,42 @@ export class SwipeController {
     private readonly userService: UserService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createSwipeDto: CreateSwipeDto) {
-    return this.swipeService.create(createSwipeDto);
+  async create(
+    @Body() payload: SwipeDto,
+    @Request() req,
+    @Res() res: Response,
+  ) {
+    const { id: userId } = req.user;
+    try {
+      await this.swipeService.validateUserTargetId(payload.userId);
+      await this.swipeService.validateSwipeDailyQuota(userId);
+      await this.swipeService.validateHasSwiped(userId, payload.userId);
+
+      await this.swipeService.create(payload, userId);
+    } catch (error) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: error.message,
+      });
+    }
+
+    return res.json({
+      message: 'Swipe success',
+    });
   }
 
   @UseGuards(AuthGuard)
   @Get()
   async find(@Request() req, @Res() res: Response) {
-    const { id, gender } = req.user;
-    const user = await this.userService.getViewedUser(id, gender);
+    const { id: currentUserId, gender } = req.user;
+    const { id, name, isVerified } = await this.userService.getViewedUser(
+      currentUserId,
+      gender,
+    );
 
     return res.json({
-      data: user,
+      data: { id, name, isVerified },
     });
   }
 }
