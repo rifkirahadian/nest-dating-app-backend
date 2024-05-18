@@ -3,7 +3,7 @@ import { Swipe } from './entities/swipe.entity';
 import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 import { SwipeDto } from './dto/swipe.dto';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class SwipeService {

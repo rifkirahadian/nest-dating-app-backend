@@ -2,10 +2,10 @@ import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { Response } from 'express';
-import { hashPassword, isMatchPassword } from 'src/utils/password';
+import { hashPassword, isMatchPassword } from '../utils/password';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from 'src/constants/auth';
+import { jwtConstants } from '../constants/auth';
 
 @Controller('user')
 export class UserController {

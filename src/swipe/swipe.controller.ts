@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { SwipeService } from './swipe.service';
 import { SwipeDto } from './dto/swipe.dto';
-import { UserService } from 'src/user/user.service';
-import { AuthGuard } from 'src/guards/auth';
+import { UserService } from '../user/user.service';
+import { AuthGuard } from '../guards/auth';
 import { Response } from 'express';
 import { ApiBearerAuth } from '@nestjs/swagger';
 

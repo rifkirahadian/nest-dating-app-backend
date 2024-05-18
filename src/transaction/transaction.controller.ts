@@ -10,7 +10,7 @@ import {
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { Response } from 'express';
-import { AuthGuard } from 'src/guards/auth';
+import { AuthGuard } from '../guards/auth';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiBearerAuth()
