@@ -97,4 +97,18 @@ describe('UserService', () => {
     // Verify that findOneByEmail was called with the correct parameter
     expect(service.findOneByEmail).toHaveBeenCalledWith(email);
   });
+
+  it('should get viewed user', async () => {
+    const user = new User();
+    user.id = 1;
+    user.name = 'Test User';
+    user.email = 'test@example.com';
+    user.gender = 'male';
+
+    jest
+      .spyOn(service, 'getViewedUser')
+      .mockImplementation(() => Promise.resolve(user));
+
+    expect(await service.getViewedUser(1, 'female')).toBe(user);
+  });
 });
