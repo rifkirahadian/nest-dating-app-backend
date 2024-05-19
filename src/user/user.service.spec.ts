@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/register.dto';
 import { User } from './entities/user.entity';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { usersProviders } from './user.provider';
+import { BadRequestException } from '@nestjs/common';
 describe('UserService', () => {
   let service: UserService;
 
@@ -51,10 +52,49 @@ describe('UserService', () => {
       .spyOn(service, 'create')
       .mockImplementationOnce(() => Promise.resolve(newUser));
 
-    // Call the create method of the UserService with the registerDto
-    const createdUser = await service.create(registerDto);
+    expect(await service.create(registerDto)).toEqual(newUser);
+  });
 
-    // Verify that the created user matches the expected newUser
-    expect(createdUser).toEqual(newUser);
+  it('should get user by email', async () => {
+    const user = new User();
+    user.id = 1;
+    user.name = 'Test User';
+    user.email = 'test@example.com';
+    user.gender = 'male';
+
+    jest
+      .spyOn(service, 'findOneByEmail')
+      .mockImplementation(() => Promise.resolve(user));
+
+    expect(await service.findOneByEmail('test@example.com')).toBe(user);
+  });
+
+  it('should get user by id', async () => {
+    const user = new User();
+    user.id = 1;
+    user.name = 'Test User';
+    user.email = 'test@example.com';
+    user.gender = 'male';
+
+    jest
+      .spyOn(service, 'findById')
+      .mockImplementation(() => Promise.resolve(user));
+
+    expect(await service.findById(1)).toBe(user);
+  });
+
+  it('should throw BadRequestException if email is already in use', async () => {
+    const email = 'test@example.com';
+
+    // Mock the findOneByEmail method to return a user
+    jest.spyOn(service, 'findOneByEmail').mockResolvedValue(new User());
+
+    // Expect validateUserUniqueEmail to throw BadRequestException
+    await expect(service.validateUserUniqueEmail(email)).rejects.toThrow(
+      new BadRequestException(`Email '${email}' has been used`),
+    );
+
+    // Verify that findOneByEmail was called with the correct parameter
+    expect(service.findOneByEmail).toHaveBeenCalledWith(email);
   });
 });
