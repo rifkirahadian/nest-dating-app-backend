@@ -3,29 +3,25 @@ import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
 import { User } from './entities/user.entity';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { usersProviders } from './user.provider';
 import { BadRequestException } from '@nestjs/common';
+import { createMemDB } from '../database/create-mem-db';
+import { Sequelize } from 'sequelize-typescript';
 describe('UserService', () => {
   let service: UserService;
+  let memDb: Sequelize;
 
   beforeEach(async () => {
+    memDb = await createMemDB([User]);
+
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        SequelizeModule.forRootAsync({
-          useFactory: async () => ({
-            dialect: 'sqlite',
-            storage: ':memory:',
-            synchronize: true,
-            models: [User],
-          }),
-        }),
-      ],
       providers: [UserService, ...usersProviders, JwtService],
     }).compile();
 
     service = module.get<UserService>(UserService);
   });
+
+  afterAll(() => memDb.close());
 
   it('should be defined', () => {
     expect(service).toBeDefined();
