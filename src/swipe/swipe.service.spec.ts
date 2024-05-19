@@ -23,4 +23,13 @@ describe('SwipeService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should count today swipes', async () => {
+    const count = 5;
+    jest
+      .spyOn(service, 'getCountTodaySwipes')
+      .mockImplementationOnce(() => Promise.resolve(count));
+
+    expect(await service.getCountTodaySwipes(1)).toEqual(count);
+  });
 });
