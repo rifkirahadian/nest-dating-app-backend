@@ -111,4 +111,27 @@ describe('UserService', () => {
 
     expect(await service.getViewedUser(1, 'female')).toBe(user);
   });
+
+  it('should update user as verified', async () => {
+    const userId = 1;
+
+    // Create a mock user
+    const mockUser = new User();
+    mockUser.id = userId;
+    mockUser.isVerified = false;
+    mockUser.save = jest.fn().mockResolvedValue(mockUser);
+
+    // Mock the findById method to return the mock user
+    jest.spyOn(service, 'findById').mockResolvedValue(mockUser);
+
+    // Call the updateVerified method
+    const updatedUser = await service.updateVerified(userId);
+
+    // Verify that the user was updated correctly
+    expect(updatedUser.isVerified).toBe(true);
+    expect(mockUser.save).toHaveBeenCalled();
+
+    // Verify that findById was called with the correct parameter
+    expect(service.findById).toHaveBeenCalledWith(userId);
+  });
 });
