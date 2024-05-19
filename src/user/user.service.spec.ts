@@ -134,4 +134,27 @@ describe('UserService', () => {
     // Verify that findById was called with the correct parameter
     expect(service.findById).toHaveBeenCalledWith(userId);
   });
+
+  it('should update user as null dailySwipeQuota', async () => {
+    const userId = 1;
+
+    // Create a mock user
+    const mockUser = new User();
+    mockUser.id = userId;
+    mockUser.dailySwipeQuota = 10;
+    mockUser.save = jest.fn().mockResolvedValue(mockUser);
+
+    // Mock the findById method to return the mock user
+    jest.spyOn(service, 'findById').mockResolvedValue(mockUser);
+
+    // Call the updateDailySwipeQuota method
+    const updatedUser = await service.updateDailySwipeQuota(userId);
+
+    // Verify that the user was updated correctly
+    expect(updatedUser.dailySwipeQuota).toBe(null);
+    expect(mockUser.save).toHaveBeenCalled();
+
+    // Verify that findById was called with the correct parameter
+    expect(service.findById).toHaveBeenCalledWith(userId);
+  });
 });
