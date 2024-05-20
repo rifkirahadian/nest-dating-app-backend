@@ -5,7 +5,6 @@ import { usersProviders } from '../user/user.provider';
 import { UserService } from '../user/user.service';
 import { SwipeDto } from './dto/swipe.dto';
 import { Swipe } from './entities/swipe.entity';
-// import { BadRequestException } from '@nestjs/common';
 import { User } from '../user/entities/user.entity';
 import { Sequelize } from 'sequelize-typescript';
 import { createMemDB } from '../database/create-mem-db';

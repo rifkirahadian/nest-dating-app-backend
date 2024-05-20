@@ -10,7 +10,7 @@ export class TransactionService {
     private userService: UserService,
   ) {}
 
-  create(userId: number, type: string) {
+  create(userId: number, type: string): Promise<Transaction> {
     return this.transactionsRepository.create({
       userId,
       type,

@@ -21,7 +21,10 @@ describe('UserService', () => {
     service = module.get<UserService>(UserService);
   });
 
-  afterAll(() => memDb.close());
+  afterAll(() => {
+    memDb.close();
+    jest.clearAllMocks();
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
